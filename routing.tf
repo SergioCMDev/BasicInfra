@@ -1,7 +1,7 @@
 # Routing table for public subnet (access to the Internet)
 # Using in-line routes 
 resource "aws_route_table" "rt-pub-main" {
-  vpc_id = aws_vpc.example.id
+  vpc_id = aws_vpc.customVPC.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
@@ -13,7 +13,7 @@ resource "aws_route_table" "rt-pub-main" {
 
 # Set new main_route_table as main
 resource "aws_main_route_table_association" "rta-default" {
-  vpc_id = aws_vpc.example.id
+  vpc_id = aws_vpc.customVPC.id
   route_table_id = aws_route_table.rt-pub-main.id
 }
 
@@ -21,7 +21,7 @@ resource "aws_main_route_table_association" "rta-default" {
 # Routing table for private subnet in Availability Zone A 
 # Using standalone routes resources 
 resource "aws_route_table" "rt-priv-za" {
-  vpc_id = aws_vpc.example.id
+  vpc_id = aws_vpc.customVPC.id
   tags = {
     Name = "rt-priv-za"
   }
@@ -43,7 +43,7 @@ resource "aws_route_table_association" "ditwl-rta-za-pro-pri-02" {
 # Routing table for private subnet in Availability Zone B
 # Using standalone routes resources 
 resource "aws_route_table" "rt-priv-zb" {
-  vpc_id = aws_vpc.example.id
+  vpc_id = aws_vpc.customVPC.id
   tags = {
     Name = "rt-priv-zb"
   }
