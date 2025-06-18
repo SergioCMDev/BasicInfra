@@ -4,7 +4,6 @@ resource "aws_security_group" "sg_base_ec2" {
   vpc_id      = aws_vpc.customVPC.id
   description = "Base security Group for EC2 instances"
 }
-# DANGEROUS!!
 # Allow access from the Internet to port 22 (SSH) in the Public EC2 instances
 resource "aws_security_group_rule" "sr_internet_to_ec2_ssh" {
   security_group_id = aws_security_group.sg_base_ec2.id
@@ -12,7 +11,7 @@ resource "aws_security_group_rule" "sr_internet_to_ec2_ssh" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"] # Internet
+  cidr_blocks       = ["${var.public_ip}/32"]
   description       = "Allow access from the Internet to port 22 (SSH)"
 }
 # Allow access from the Internet for ICMP protocol (e.g. ping) to the EC2 instances

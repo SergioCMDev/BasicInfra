@@ -22,3 +22,8 @@ variable "ec2_instance_type"{
     description = "Instance type"
     default = "t2.micro"
 }
+
+variable "public_ip" {
+  type = string
+  description = "self public ip"
+}
