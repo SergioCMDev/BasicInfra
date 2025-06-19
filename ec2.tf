@@ -1,3 +1,15 @@
+data "template_file" "user_data" {
+  template = file("${path.module}/user_data.tpl")
+
+  vars = {
+    db_name     = aws_db_instance.mydb.name
+    db_user     = aws_db_instance.mydb.username
+    db_password = aws_db_instance.mydb.password
+    db_host     = aws_db_instance.mydb.address
+  }
+}
+
+
 resource "aws_instance" "ec2_instance" {
     ami = var.ec2_ami
     associate_public_ip_address = true
@@ -8,10 +20,5 @@ resource "aws_instance" "ec2_instance" {
     tags = {
         Name = "Terraform_Instance"
     }
-    user_data = templatefile("${path.module}/user_data.sh.tpl", {
-        db_name     = aws_db_instance.wordpress_db.db_name
-        db_user     = aws_db_instance.wordpress_db.username
-        db_password = aws_db_instance.wordpress_db.password
-        db_host     = aws_db_instance.wordpress_db.address
-    })
+    user_data = data.template_file.user_data.rendered
 }
