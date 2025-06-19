@@ -4,6 +4,7 @@ resource "aws_security_group" "sg_base_ec2" {
   vpc_id      = aws_vpc.customVPC.id
   description = "Base security Group for EC2 instances"
 }
+
 # Allow access from the Internet to port 22 (SSH) in the Public EC2 instances
 resource "aws_security_group_rule" "sr_internet_to_ec2_ssh" {
   security_group_id = aws_security_group.sg_base_ec2.id
@@ -14,6 +15,7 @@ resource "aws_security_group_rule" "sr_internet_to_ec2_ssh" {
   cidr_blocks       = ["${var.public_ip}/32"]
   description       = "Allow access from the Internet to port 22 (SSH)"
 }
+
 # Allow access from the Internet for ICMP protocol (e.g. ping) to the EC2 instances
 resource "aws_security_group_rule" "sr_internet_to_ec2_icmp" {
   security_group_id = aws_security_group.sg_base_ec2.id
@@ -24,6 +26,7 @@ resource "aws_security_group_rule" "sr_internet_to_ec2_icmp" {
   cidr_blocks       = ["0.0.0.0/0"] # Internet
   description       = "Allow access from the Internet for ICMP protocol"
 }
+
 # Allow all outbound traffic to the Internet
 resource "aws_security_group_rule" "sr_all_outbund" {
   security_group_id = aws_security_group.sg_base_ec2.id
@@ -35,13 +38,13 @@ resource "aws_security_group_rule" "sr_all_outbund" {
   description       = "Allow all outbound traffic to Internet"
 }
 
-
 # Create a Security Group for the Front end Server
 resource "aws_security_group" "sg_front_end" {
   name        = "aws_sg_front_end"
   vpc_id      = aws_vpc.customVPC.id
   description = "Front end Server Security"
 }
+
 # Allow access from the Internet to port 80 HTTP in the EC2 instances
 resource "aws_security_group_rule" "sr_internet_to_front_end_http" {
   security_group_id = aws_security_group.sg_front_end.id
@@ -53,13 +56,13 @@ resource "aws_security_group_rule" "sr_internet_to_front_end_http" {
   description       = "Access from the Internet to port 80 in the EC2 instances"
 }
 
-
 # Create a Security Group for the Back-end Server
 resource "aws_security_group" "sg_back_end" {
   name        = "aws_sg_back_end"
   vpc_id      = aws_vpc.customVPC.id
   description = "Back-end Server Security"
 }
+
 # Allow access from the front-end to port 8080 in the back-end API
 resource "aws_security_group_rule" "sr_front_end_to_api" {
   security_group_id        = aws_security_group.sg_back_end.id

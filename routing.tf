@@ -17,7 +17,6 @@ resource "aws_main_route_table_association" "rta-default" {
   route_table_id = aws_route_table.rt-pub-main.id
 }
 
-
 # Routing table for private subnet in Availability Zone A 
 # Using standalone routes resources 
 resource "aws_route_table" "rt-priv-za" {
@@ -48,11 +47,13 @@ resource "aws_route_table" "rt-priv-zb" {
     Name = "rt-priv-zb"
   }
 }
+
 # Routing Table Association for Subnet ditwl-sn-zb-pro-pri-06
 resource "aws_route_table_association" "rta-zb-privateSubnetExample2" {
   subnet_id      = aws_subnet.privateSubnetExample2.id
   route_table_id = aws_route_table.rt-priv-zb.id
 }
+
 # Route Access to the Internet through NAT (Av. Zone B)
 resource "aws_route" "rt-priv-zb-ngw-zb" {
   route_table_id         = aws_route_table.rt-priv-zb.id
