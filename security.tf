@@ -5,6 +5,29 @@ resource "aws_security_group" "sg_base_ec2" {
   description = "Base security Group for EC2 instances"
 }
 
+# Create a "base" Security Group for RS
+resource "aws_security_group" "sg_rds" {
+  name        = "aws_sg_rds"
+  vpc_id      =  aws_vpc.customVPC.id
+  description = "Base security Group for RDS"
+  
+  ingress {
+    description              = "Allow MySQL from EC2 SG"
+    from_port                = 3306
+    to_port                  = 3306
+    protocol                 = "tcp"
+    security_groups          = [aws_security_group.sg_base_ec2.id] 
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+}
+
 # Allow access from the Internet to port 22 (SSH) in the Public EC2 instances
 resource "aws_security_group_rule" "sr_internet_to_ec2_ssh" {
   security_group_id = aws_security_group.sg_base_ec2.id

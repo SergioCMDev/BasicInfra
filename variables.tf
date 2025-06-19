@@ -8,7 +8,6 @@ variable "aws_availability_zones"{
     description = "Availability zones"
 }
 
-
 variable "ec2_ami"{
     type = string
     description = "AMI"
@@ -22,6 +21,21 @@ variable "ec2_instance_type"{
 }
 
 variable "public_ip" {
-  type = string
-  description = "self public ip"
+    type = string
+    description = "self public ip"
+}
+
+variable "db_name" {
+    type = string
+    description = "db name"
+}
+
+variable "db_username" {
+    type = string
+    description = "db username"
+}
+
+variable "db_password" {
+    type = string
+    description = "db password"
 }
