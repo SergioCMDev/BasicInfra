@@ -1,11 +1,11 @@
 data "template_file" "user_data" {
-  template = file("${path.module}/user_data.tpl")
+  template = file("${path.module}/user_data.sh.tpl")
 
   vars = {
-    db_name     = aws_db_instance.mydb.name
-    db_user     = aws_db_instance.mydb.username
-    db_password = aws_db_instance.mydb.password
-    db_host     = aws_db_instance.mydb.address
+    db_name     = aws_db_instance.wordpress_db.db_name
+    db_user     = aws_db_instance.wordpress_db.username
+    db_password = aws_db_instance.wordpress_db.password
+    db_host     = aws_db_instance.wordpress_db.address
   }
 }
 
