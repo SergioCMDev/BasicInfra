@@ -30,14 +30,12 @@ variable "db_name" {
   type        = string
   description = "db name"
   sensitive   = true
-
 }
 
 variable "db_username" {
   type        = string
   description = "db username"
   sensitive   = true
-
 }
 
 variable "db_password" {
@@ -58,8 +56,4 @@ variable "repo_owner" {
 variable "repo_name" {
   type        = string
   description = "Nombre del repositorio en GitHub"
-}
-
-output "account_id" {
-  value = var.aws_account_id
 }
