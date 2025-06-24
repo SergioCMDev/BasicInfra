@@ -54,10 +54,6 @@ variable "repo_name" {
   description = "Nombre del repositorio en GitHub"
 }
 
-variable "aws_account_id"{
-  type        = string
-}
-
 variable "oidc_arn" {
   type        = string
   description = "ARN del provider OIDC"
