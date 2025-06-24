@@ -5,6 +5,14 @@ resource "aws_security_group" "sg_base_ec2" {
   description = "Base security Group for EC2 instances"
 }
 
+resource "aws_security_group" "sg_base_ec2_test" {
+  name        = "aws_sg_base_ec2_test"
+  vpc_id      = aws_vpc.customVPC.id
+  description = "Base security Group for EC2 instances"
+}
+
+
+
 # Create a "base" Security Group for RS
 resource "aws_security_group" "sg_rds" {
   name        = "aws_sg_rds"
