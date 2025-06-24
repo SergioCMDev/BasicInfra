@@ -1,6 +1,6 @@
 # Create a "base" Security Group for EC2 instances
 resource "aws_ro" "name" {
-  
+
 }
 
 resource "aws_security_group" "sg_base_ec2" {
@@ -12,15 +12,15 @@ resource "aws_security_group" "sg_base_ec2" {
 # Create a "base" Security Group for RS
 resource "aws_security_group" "sg_rds" {
   name        = "aws_sg_rds"
-  vpc_id      =  aws_vpc.customVPC.id
+  vpc_id      = aws_vpc.customVPC.id
   description = "Base security Group for RDS"
-  
+
   ingress {
-    description              = "Allow MySQL from EC2 SG"
-    from_port                = 3306
-    to_port                  = 3306
-    protocol                 = "tcp"
-    security_groups          = [aws_security_group.sg_base_ec2.id] 
+    description     = "Allow MySQL from EC2 SG"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sg_base_ec2.id]
   }
 
   egress {
@@ -126,7 +126,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     effect = "Allow"
     principals {
       type        = "Federated"
-      identifiers =  ["arn:aws:iam::${var.aws_account_id}:oidc-provider/token.actions.githubusercontent.com"]
+      identifiers = ["arn:aws:iam::${var.aws_account_id}:oidc-provider/token.actions.githubusercontent.com"]
     }
 
     actions = ["sts:AssumeRoleWithWebIdentity"]

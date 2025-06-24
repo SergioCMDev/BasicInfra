@@ -13,7 +13,7 @@ resource "aws_route_table" "rt-pub-main" {
 
 # Set new main_route_table as main
 resource "aws_main_route_table_association" "rta-default" {
-  vpc_id = aws_vpc.customVPC.id
+  vpc_id         = aws_vpc.customVPC.id
   route_table_id = aws_route_table.rt-pub-main.id
 }
 
