@@ -29,3 +29,8 @@ output "db_password" {
   value = aws_db_instance.wordpress_db.password
   sensitive = true
 }
+
+output "aws_iam_arn"{
+  value = aws_iam_role.github_actions_role.arn
+  sensitive = true
+}

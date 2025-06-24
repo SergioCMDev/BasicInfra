@@ -39,3 +39,30 @@ variable "db_password" {
     type = string
     description = "db password"
 }
+
+variable "aws_account_id"{
+  type        = string
+}
+
+variable "repo_owner" {
+  type        = string
+  description = "Nombre del usuario u organización en GitHub"
+}
+
+variable "repo_name" {
+  type        = string
+  description = "Nombre del repositorio en GitHub"
+}
+
+variable "aws_account_id"{
+  type        = string
+}
+
+variable "oidc_arn" {
+  type        = string
+  description = "ARN del provider OIDC"
+}
+
+output "account_id" {
+  value = var.aws_account_id
+}

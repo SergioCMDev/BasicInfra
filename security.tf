@@ -1,4 +1,8 @@
 # Create a "base" Security Group for EC2 instances
+resource "aws_ro" "name" {
+  
+}
+
 resource "aws_security_group" "sg_base_ec2" {
   name        = "aws_sg_base_ec2"
   vpc_id      = aws_vpc.customVPC.id
@@ -101,4 +105,53 @@ resource "aws_security_group_rule" "sr_front_end_to_api" {
 resource "aws_key_pair" "kp_config_user" {
   key_name   = "kp_config_user"
   public_key = file("id_rsa.pub")
+}
+
+
+resource "aws_iam_openid_connect_provider" "github" {
+  url = "https://token.actions.githubusercontent.com"
+
+  client_id_list = [
+    "sts.amazonaws.com"
+  ]
+
+  thumbprint_list = [
+    "6938fd4d98bab03faadb97b34396831e3780aea1" # GitHub's trusted thumbprint
+  ]
+}
+
+
+data "aws_iam_policy_document" "github_oidc_assume_role" {
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "Federated"
+      identifiers =  ["arn:aws:iam::${var.aws_account_id}:oidc-provider/token.actions.githubusercontent.com"]
+    }
+
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = ["repo:${var.repo_owner}/${var.repo_name}:*"]
+    }
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "github_actions_role" {
+  name               = "GitHubActionsTerraformRole"
+  assume_role_policy = data.aws_iam_policy_document.github_oidc_assume_role.json
+  depends_on = [
+    aws_iam_openid_connect_provider.github
+  ]
+}
+
+resource "aws_iam_role_policy_attachment" "terraform_permissions" {
+  role       = aws_iam_role.github_actions_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
