@@ -47,3 +47,11 @@ jobs:
        script: |
         const token = await core.getIDToken();
         console.log("OIDC token successfully retrieved.");
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan -input=false
+    
+    # Generates an execution plan for Terraform
+    - name: Terraform Apply
+      run: terraform apply --auto-approve
