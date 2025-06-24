@@ -1,8 +1,4 @@
 # Create a "base" Security Group for EC2 instances
-resource "aws_ro" "name" {
-
-}
-
 resource "aws_security_group" "sg_base_ec2" {
   name        = "aws_sg_base_ec2"
   vpc_id      = aws_vpc.customVPC.id
