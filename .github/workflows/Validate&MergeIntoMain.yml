@@ -1,0 +1,75 @@
+name: 'Validate and Merge'
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+  CheckTerraformCode:
+    name: 'Validate'
+    runs-on: ubuntu-latest
+    environment: production
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Install the latest version of Terraform CLI
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check
+
+    - name: Terraform Validate
+      run:  |
+       terraform validate
+
+  MergeTerraformBranch:  
+    name: 'Merge'
+    runs-on: ubuntu-latest
+    environment: production
+    needs:  CheckTerraformCode
+    defaults:
+      run:
+        shell: bash
+    if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Necesario para hacer merge entre ramas
+      - name: Set up Git
+        run: |
+          git config --global user.email "mergeBot@github.com"
+          git config --global user.name "MergeBot"
+      - name: Checkout and merge dev into main
+        run: |
+          git checkout main
+          git pull origin main
+          git merge origin/dev --no-ff -m "Auto-merge dev into main"
+      - name: Create Pull Request to merge dev into main
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          branch: merge-dev-into-main  # nombre de la rama temporal
+          title: "Merge dev into main"
+          body: "Este PR fue generado automáticamente por GitHub Actions después de pasar los tests."
+          delete-branch: true
