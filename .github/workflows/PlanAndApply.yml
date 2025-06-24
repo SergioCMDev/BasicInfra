@@ -60,7 +60,19 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
+      env:
+        TF_VAR_public_ip:      ${{ secrets.PUBLIC_IP }}
+        TF_VAR_db_name:        ${{ secrets.DB_NAME }}
+        TF_VAR_db_username:    ${{ secrets.DB_USERNAME }}
+        TF_VAR_db_password:    ${{ secrets.DB_PASSWORD}}
+        TF_VAR_aws_account_id: ${{secrets.AWS_ACCOUNT_ID}}
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
       run: terraform apply --auto-approve
+      env:
+        TF_VAR_public_ip:      ${{ secrets.PUBLIC_IP }}
+        TF_VAR_db_name:        ${{ secrets.DB_NAME }}
+        TF_VAR_db_username:    ${{ secrets.DB_USERNAME }}
+        TF_VAR_db_password:    ${{ secrets.DB_PASSWORD}}
+        TF_VAR_aws_account_id: ${{secrets.AWS_ACCOUNT_ID}}
