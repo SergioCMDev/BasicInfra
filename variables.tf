@@ -23,21 +23,27 @@ variable "ec2_instance_type" {
 variable "public_ip" {
   type        = string
   description = "self public ip"
+  sensitive   = true
 }
 
 variable "db_name" {
   type        = string
   description = "db name"
+  sensitive   = true
+
 }
 
 variable "db_username" {
   type        = string
   description = "db username"
+  sensitive   = true
+
 }
 
 variable "db_password" {
   type        = string
   description = "db password"
+  sensitive   = true
 }
 
 variable "aws_account_id" {
@@ -52,11 +58,6 @@ variable "repo_owner" {
 variable "repo_name" {
   type        = string
   description = "Nombre del repositorio en GitHub"
-}
-
-variable "oidc_arn" {
-  type        = string
-  description = "ARN del provider OIDC"
 }
 
 output "account_id" {
