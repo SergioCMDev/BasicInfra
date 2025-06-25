@@ -4,7 +4,7 @@ resource "aws_vpc" "customVPC" {
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
-    Name      = "EKS-VPC"
+    Name      = "VPC"
     terraform = "true"
   }
 }
