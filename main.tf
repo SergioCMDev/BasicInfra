@@ -38,7 +38,7 @@ module "Github_Provider" {
 module "Network" {
   source = "./modules/Network"
 
-  aws_availability_zones = []
+  aws_availability_zones = var.aws_availability_zones
 
 }
 

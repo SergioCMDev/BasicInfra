@@ -37,3 +37,8 @@ variable "repo_name" {
   type        = string
   description = "repo_name"
 }
+
+variable "aws_availability_zones" {
+  type        = list(any)
+  description = "Availability zones"
+}
