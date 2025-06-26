@@ -26,7 +26,6 @@ resource "aws_security_group" "sg_rds" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
 }
 
 # Allow access from the Internet to port 22 (SSH) in the Public EC2 instances

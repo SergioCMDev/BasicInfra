@@ -1,11 +1,11 @@
 variable "repo_owner" {
   type        = string
-  description = "Nombre del usuario u organización en GitHub"
+  description = "repo_owner"
   default     = "SergioCMDev"
 }
 
 variable "repo_name" {
   type        = string
-  description = "Nombre del repositorio en GitHub"
+  description = "repo_name"
   default     = "BasicPipelineTerraformGitHubActions"
 }
