@@ -21,18 +21,14 @@ module "Compute" {
 }
 
 module "Security" {
-  source = "./modules/Security"
+  source = "./modules/02 - Security"
 
-  customVPC_id           = module.Network.customVPC_id
-  repo_name              = var.repo_name
-  repo_owner             = var.repo_owner
-  public_ip              = var.public_ip
-  aws_account_id         = var.aws_account_id
+  customVPC_id   = module.Network.customVPC_id
+  public_ip      = var.public_ip
+  aws_account_id = var.aws_account_id
 }
 
-module "Github_Provider" {
-  source = "./modules/Github_Provider"
-}
+
 
 module "Network" {
   source = "./modules/Network"
