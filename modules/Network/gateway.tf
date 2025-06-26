@@ -15,13 +15,6 @@ resource "aws_nat_gateway" "aws_nat_gateway_pub_ZA" {
   depends_on = [aws_internet_gateway.igw]
 }
 
-# EIP for NAT Gateway in AZ A
-resource "aws_eip" "eip-ngw-za" {
-  domain = "vpc"
-  tags = {
-    Name = "eip-ngw-za"
-  }
-}
 
 # NAT Gateway Public Availability Zone: B
 resource "aws_nat_gateway" "aws_nat_gateway_pub_ZB" {
@@ -31,12 +24,4 @@ resource "aws_nat_gateway" "aws_nat_gateway_pub_ZB" {
     Name = "aws_nat_gateway_pub_ZB"
   }
   depends_on = [aws_internet_gateway.igw]
-}
-
-# EIP for NAT Gateway in AZ B
-resource "aws_eip" "eip-ngw-zb" {
-  domain = "vpc"
-  tags = {
-    Name = "eip-ngw-zb"
-  }
 }
