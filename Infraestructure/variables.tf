@@ -28,16 +28,6 @@ variable "public_ip" {
   description = "public_ip"
 }
 
-variable "repo_owner" {
-  type        = string
-  description = "repo_owner"
-}
-
-variable "repo_name" {
-  type        = string
-  description = "repo_name"
-}
-
 variable "aws_availability_zones" {
   type        = list(any)
   description = "Availability zones"
