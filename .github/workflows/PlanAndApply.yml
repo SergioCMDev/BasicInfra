@@ -48,6 +48,7 @@ jobs:
         const token = await core.getIDToken();
         console.log("OIDC token successfully retrieved.");
 
+   # Go to infraestructure folder 
    # Install the latest version of Terraform CLI
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
@@ -55,10 +56,12 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
+      working-directory: Infraestructure
       run: terraform init
       
     # Generates an execution plan for Terraform
     - name: Terraform Plan
+      working-directory: Infraestructure
       run: terraform plan -input=false
       env:
         TF_VAR_public_ip:      ${{ secrets.PUBLIC_IP }}
@@ -69,6 +72,7 @@ jobs:
     
     # Generates an execution plan for Terraform
     - name: Terraform Apply
+      working-directory: Infraestructure
       run: terraform apply --auto-approve
       env:
         TF_VAR_public_ip:      ${{ secrets.PUBLIC_IP }}
