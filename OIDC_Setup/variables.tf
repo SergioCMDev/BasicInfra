@@ -7,5 +7,5 @@ variable "repo_owner" {
 variable "repo_name" {
   type        = string
   description = "repo_name"
-  default     = "BasicPipelineTerraformGitHubActions"
+  default     = "Wordpress-and-phpMyAdmin-with-Terraform-and-AWS"
 }
