@@ -1,4 +1,4 @@
-name: 'Plan And Apply'
+name: 'Terraform Destroy'
 
 on:
   push:
