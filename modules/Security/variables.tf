@@ -22,7 +22,3 @@ variable "public_ip" {
 variable "customVPC_id"{
   type = string
 }
-
-variable "github_openid_provider" {
-  type = string
-}

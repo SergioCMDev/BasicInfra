@@ -24,7 +24,6 @@ module "Security" {
   source = "./modules/Security"
 
   customVPC_id           = module.Network.customVPC_id
-  github_openid_provider = module.Github_Provider.github_openid_provider
   repo_name              = var.repo_name
   repo_owner             = var.repo_owner
   public_ip              = var.public_ip
